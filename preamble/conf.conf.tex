@@ -1,0 +1,12 @@
+% It would be nice to be able to write:
+%% \input{preamble/conf.conf.tex}
+%% \setconf{%chemin des fichiers%}
+%% \loadconf{%nom de la configuration%}
+
+% Thus one could load one by one each configuration file:
+\usepackage{etoolbox} % http://ctan.org/pkg/etoolbox
+\newcommand{\loadconf}{
+	%http://tex.stackexchange.com/questions/87407/iterating-through-comma-separated-arguments
+}
+
+% If a conf file needs another file to be loaded first, a global variable should be added to ensure this. Then, we would only have to use a basic linked list.

@@ -40,9 +40,6 @@ custom_patterns () {
 	cp -R $1 $target_directory
 }
 
-# We move into that script location.
-cd $path
-
 # General functino to read files.
 # $1: path of file to be read;
 # $2: variable to append content to.
@@ -53,6 +50,13 @@ read_file () {
 		eval "$tmp='${!tmp} $line'" # I know this is unsecure, correct me if you have a better idea.
 	done < $1
 }
+
+################################################################################
+#								Script body									   #
+################################################################################
+
+# We move into that script location.
+cd $path
 
 read_file ".gitignore" "gitignore"
 read_file ".preserved" "preserved"
@@ -71,4 +75,6 @@ do
 		[[ -d $file ]] && rm -rf $file || rm $file
 	done
 done
+
+# git reset --hard HEAD
 

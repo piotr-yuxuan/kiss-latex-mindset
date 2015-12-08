@@ -11,11 +11,16 @@
 *.maf
 *.mintedcmd
 *.out
-*.pdf
 *.pyg
+*.dvi
+*.rst
+*.md
+*.pdf
 *.run.xml
 *.synctex.gz
 *.toc
+*.txt
+*.docx
 *mtc*
 *pvt*
 

@@ -1,0 +1,83 @@
+\makeatletter
+\newenvironment{titlepage}
+{\if@twocolumn
+	\@restonecoltrue\onecolumn
+\else
+	\@restonecolfalse\newpage
+\fi
+\thispagestyle{empty}%
+\setcounter{page}\@ne
+}%
+{\if@restonecol\twocolumn \else \newpage \fi
+\if@twoside\else
+\setcounter{page}\@ne
+\fi
+}
+
+\newcommand\maketitlepage{
+	
+	\begin{titlepage}
+	
+	\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Defines a new command for the horizontal lines, change thickness here
+	
+	\center % Center everything on the page
+	
+	%----------------------------------------------------------------------------------------
+	%	HEADING SECTIONS
+	%----------------------------------------------------------------------------------------
+	
+	\textsc{\LARGE \customuniversity}\\\vspace{\stretch{1.5}} % Name of your university/college
+	\textsc{\Large \custommajor}\\\vspace{\stretch{0.5}} % Major heading such as course name
+	\textsc{\large \customminor}\vspace{\stretch{0.5}} % Minor heading such as course title
+	
+	%----------------------------------------------------------------------------------------
+	%	TITLE SECTION
+	%----------------------------------------------------------------------------------------
+	
+	\HRule \vspace{\stretch{0.4}}
+	{ \huge \bfseries \customtitle}\vspace{\stretch{0.4}} % Title of your document
+	\HRule \vspace{\stretch{1.5}}
+	
+	%----------------------------------------------------------------------------------------
+	%	AUTHOR SECTION
+	%----------------------------------------------------------------------------------------
+	
+	\begin{minipage}{0.4\textwidth}
+		\begin{flushleft} \large
+			\emph{Auteur}\\
+			\customauthor
+		\end{flushleft}
+	\end{minipage}
+	~
+	\begin{minipage}{0.4\textwidth}
+		\begin{flushright} \large
+			\emph{Professeur référent} \\
+			\customsupervisor % Supervisor's Name
+		\end{flushright}
+	\end{minipage}\vspace{\stretch{4}}
+	
+	% If you don't want a supervisor, uncomment the two lines below and remove the section above
+	%\Large \emph{Author:}\\
+	%John \textsc{Smith}\\[3cm] % Your name
+	
+	%----------------------------------------------------------------------------------------
+	%	DATE SECTION
+	%----------------------------------------------------------------------------------------
+	
+	{\large \today}\vspace{\stretch{3}} % Date, change the \today to a set date if you want to be precise
+	
+	%----------------------------------------------------------------------------------------
+	%	LOGO SECTION
+	%----------------------------------------------------------------------------------------
+	
+	%\includegraphics{Logo}\\[1cm] % Include a department/university logo - this will require the graphicx package
+	
+	%----------------------------------------------------------------------------------------
+	\begin{minipage}{\textwidth}
+		\centering
+		\raisebox{-0.5\height}{\includegraphics[width=.3\textwidth,height=.3\textwidth,keepaspectratio]{assets/logo_alma.png}}
+		\hspace*{.2in}
+		\raisebox{-0.5\height}{\includegraphics[width=.3\textwidth,height=.3\textwidth,keepaspectratio]{assets/logo_company.png}}
+	\end{minipage}\end{titlepage}}
+
+\makeatother

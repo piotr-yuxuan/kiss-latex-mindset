@@ -9,7 +9,7 @@
 *.log
 *.lot
 *.maf
-*.mintedcmd
+*.minted*
 *.out
 *.pyg
 *.dvi

@@ -26,6 +26,7 @@ This small project is meant to be used on a GNU operating system, with these sof
  * TeXstudio (an LaTeX IDE), not necessary though
  * pygmentize (for code sample highlighting)
  * xelatex (for font and compilation)
+ * realpath (for some scripts)
 
 The following fonts are necessary to get this document to be compile, should you change it according your own gut: 教育部標準楷書, AR PL UKai TW MBE, AR PL UMing TW MBE, HanaMinA, HanaMinB, Unifont.
 

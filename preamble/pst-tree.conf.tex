@@ -1,0 +1,65 @@
+% See below for an example of how to use it.
+
+\usepackage[inactive]{pst-pdf}
+\usepackage{pstricks,pst-node}
+\newcounter{leaves}
+\newcounter{directories}
+
+\newenvironment{directory}[2][\linewidth]%
+% Startet neues Verzeichnis 
+% und produziert eine Minipage der angeg. Breite.
+% Syntax: \begin{directory}[width]{text}
+% text muss in eine \parbox der angegebenen Breite passen;
+% wenn keine Breite angegeben ist, wird \linewidth angenommen.
+{%
+\setcounter{leaves}{0}%
+\addtocounter{directories}{1}
+\edef\directoryname{D\thedirectories}
+\begin{minipage}[t]{#1}% <-------- !!!
+  \setlength{\parindent}{\linewidth}
+  \addtolength{\parindent}{-\dirshrink\parindent}
+  \parskip0pt%
+  \noindent
+  \Rnode[href=-\dirshrink]{\directoryname}{\parbox[t]{#1}{#2}}%
+  \par
+}  
+{\end{minipage}}
+
+% !!! --> Problem:  
+% Wegen [t] stimmt der Zeilenabstand _nach_ der minipage nicht.
+% Der Referenzpunkt eines Knoten muss aber in der _ersten_ Zeile 
+% liegen, mehrzeilige Knoten, also Unterverzeichnisse, mit ihrer
+% ersten Zeile im Dateibaum verankert weren.
+
+\newcommand{\file}[2][]{%
+% Fuer einen einzelnen Eintrag innerhalb der directory-Umgebung.
+% Das Argument darf seinerseits eine directory-Umgebung sein.
+  \addtocounter{leaves}{1}%
+  \edef\leaflabel{L\theleaves\directoryname}%
+  \par
+  \Rnode{\leaflabel}{\parbox[t]{\dirshrink\linewidth}{#2\hfill#1}}%
+  \ncangle[angleA=270,angleB=180,armB=0,nodesep=1pt]
+    {\directoryname}{\leaflabel}%
+  % \typeout{\directoryname,\leaflabel}% Debugging
+\par}
+
+\newcommand{\dirshrink}{.95} 
+% relative Verringerung der Breite der Verzeichniseintraege 
+% pro Stufe
+
+%\begin{postscript}
+%\begin{directory}{fontinst}
+%\file{\begin{directory}{doc/}
+%\file{\begin{directory}{manual/}
+%\file[Auxiliary file]{fontinst.aux}
+%\file{fontinst.log}
+%\file[table of contents ]{fontinst.toc}
+%\file{intro98.tex }
+%\file{ltxguide.cfg}
+%\file{roadmap.eps }
+%\end{directory}}
+%\file{encspecs.zip}
+%\end{directory}}
+%\file{examples.zip}
+%\end{directory}
+%\end{postscript}

@@ -16,6 +16,7 @@
 *.rst
 *.md
 *.pdf
+thesis-blx.bib
 *.run.xml
 *.synctex.gz
 *.toc

@@ -1,5 +1,6 @@
 #!/bin/bash
 # This script is to generated the thesis is several formats.
+# A known bug is handling $ in environment minted.
 
 # If no argument supplied, apply on thesis
 [ -z "$1" ] && filename="thesis" || filename="$1"

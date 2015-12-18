@@ -20,4 +20,5 @@ else
 	pandoc --toc -f rst -t markdown -s $filename.rst -o $filename.txt
 	pandoc --toc -f latex -t markdown -s $filename.tex -o $filename.md
 	pandoc --toc -f latex -t docx -s $filename.tex -o $filename.docx
+	pandoc --toc -f latex -t epub -s thesis.tex -o thesis.epub
 fi

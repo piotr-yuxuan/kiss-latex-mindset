@@ -1,0 +1,194 @@
+%%
+%% This is file `tptpolylibressavoirs-common.sty',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% tptlibressavoirs-polylibressavoirs.dtx  (with options: `polylsv-common')
+%% 
+%% This is a generated file.
+%% 
+%% Copyright © Cédric Ware and Institut Mines-Télécom, 2007-2014
+%% All rights reserved. All logos are property of their respective institutions.
+%% For more information, contact cedric.ware@telecom-paristech.fr
+%% 
+\NeedsTeXFormat{LaTeX2e}[1995/12/01]
+\ProvidesPackage{tptpolylibressavoirs-common}[2014/12/31 v3.0.2 tptlibressavoirs]
+
+%%
+%% Some lengths for margins and such.
+%%
+\providecommand{\customdeflength}[2]{\newlength{#1}\setlength{#1}{#2}}
+\customdeflength{\polyhmargin}{25mm}
+\customdeflength{\polytmargin}{25mm}
+\customdeflength{\polyheadheight}{1.3\baselineskip}
+\customdeflength{\polyheadsep}{11mm}
+\customdeflength{\polybmargin}{27mm}
+\customdeflength{\polyfootskip}{15mm}
+\customdeflength{\titlefriseposy}{12mm}
+\customdeflength{\polylicenserulewidth}{5cm}
+\setlength{\lsvlicenselogosmallheight}{7.4mm}
+\definecolor{polylicensetextcolor}{cmyk}{0.77,0.71,0.66,0.25}
+
+%%
+%% Fonts setup.
+%%
+\iflsv@helvet
+  \RequirePackage{txfonts}
+%%  \renewcommand{\familydefault}{\sfdefault}
+\fi
+
+%%
+%% Special license block for footer.
+%%
+\providecommand\hyperlink[2]{#2}% If hyperref not loaded.
+\newcommand*{\@poly@lic@title}{title}
+\newcommand*{\@poly@lic@license}{license}
+\newbox{\@poly@lic@box}
+\newcommand{\licenseblockinfoot}[1][]{%
+  \edef\@poly@lic@arg{#1}%
+  \footerfont\bfseries
+  \setbox\@poly@lic@box=\hbox{%
+    \includegraphics[height=\lsvlicenselogosmallheight]{%
+      \lsv@license@graphics@file}
+    \parbox[b]{0.45\textwidth}{% FIXME
+      \color{polylicensetextcolor}%
+      \lsv@license@short
+      \color{\lsv@license@color}%
+      ~\}~\lsv@license@ismodif\\
+      \mdseries\textit{%
+        \lsv@license@seename~%
+        \hyperlink{licensepage}{\pagename~\the\c@lastpage}%
+      }\par
+    }%
+  }%
+  \@tempdima=\wd\@poly@lic@box
+  \if\@tempdima<\polylicenserulewidth
+    \@tempdima=\polylicenserulewidth
+  \fi
+  \begin{minipage}[b]{\@tempdima}
+    \ifx\@poly@lic@arg\@poly@lic@title
+    \else
+      \textbf{\@author}%
+      \ifx\@email\empty
+      \else
+        \quad\@email
+      \fi\\[-1.5ex]
+    \fi
+    {%
+      \ifx\@poly@lic@arg\@poly@lic@license
+      \else
+      \color{\lsv@license@color}%
+      \fi
+      \rule{\polylicenserulewidth}{\@wholewidth}%
+    }\\
+    \ifx\@poly@lic@arg\@poly@lic@license
+      \vphantom{\usebox{\@poly@lic@box}}%
+    \else
+      \usebox{\@poly@lic@box}%
+    \fi
+  \end{minipage}%
+}
+
+%%
+%% Logo box aligned with license block.
+%%
+\newcommand*\tpt@deflength[2]{\newlength{#1}\setlength{#1}{#2}}% FIXME clean up
+\tpt@deflength{\tptlogowidth}{17mm}
+\tpt@deflength{\tptlogoheight}{\tptlogowidth}
+\newcommand\insertlogotptpoly{\insertlogotpt[\tptlogowidth][\tptlogoheight]}
+\newcommand{\logoinfoot}{%
+  \settoheight{\@tempdima}{\insertlogotptpoly}%
+  \settoheight{\@tempdimb}{\licenseblockinfoot[title]}%
+  \addtolength{\@tempdima}{-\@tempdimb}%
+  \raisebox{-\@tempdima}{\insertlogotptpoly}%
+}
+
+%%
+%% License setup.
+%%
+\providecommand\hypertarget[2]{#2}% If hyperref not loaded.
+\newcommand\makelicense{%
+  \hypertarget{licensepage}{}%
+  \thispagestyle{license}%
+  \ifx\chapter\undefined
+    \addcontentsline{toc}{section}{\lsv@licensename}
+  \else
+    \addcontentsline{toc}{chapter}{\lsv@licensename}
+  \fi
+  \large
+  \hspace{5em}% FIXME
+  \lsv@license@logo@big
+  ~\lsv@license@short
+  ~{\color{\lsv@license@color}\}~\lsv@license@ismodif}\\
+  ~\\
+  \small
+  \lsv@license@binding\\
+  ~\\
+  \lsv@license@long
+  ~{\color{\lsv@license@color}\texttt{\lsv@license@email}}\par
+}
+
+%%
+%% Reference (Email, ISSN, ...) FIXME
+%%
+\newcommand\email[1]{\gdef\@email{\texttt{#1}}}
+\email{}
+\newcommand\referencetype[1]{\gdef\lsv@reference@type{#1}}
+\newcommand\referencenumber[1]{\gdef\lsv@reference@number{#1}}
+\newcommand\reference[1]{\gdef\lsv@reference{#1}}
+\referencetype{}
+\referencenumber{}
+\reference{\textbf{\lsv@reference@type}~\lsv@reference@number}
+
+%%
+%% Title page.
+%%
+\def\maketitle{% Copied from book.cls, added email, removed \let\@date\@empty
+  \cleardoublepage
+  \if@twocolumn
+    \@restonecoltrue\onecolumn
+  \else
+    \@restonecolfalse\newpage
+  \fi
+  \thispagestyle{title}%
+  \setcounter{page}\z@
+  \bgroup
+    \@titlepage
+  \egroup
+  \setcounter{footnote}{0}%
+    \global\let\title\relax
+  \global\let\author\relax
+  \global\let\date\relax
+  \global\let\and\relax
+}
+\long\def\titlepage#1{\gdef\@titlepage{#1}}
+\titlepage{%
+  \let\footnotesize\small
+  \let\footnoterule\relax
+  \let \footnote \thanks
+  \null\vfil
+  \vskip 60\p@
+  \begin{raggedright}%
+    \color{libressavoirsrouge}%
+    {\fontsize{18}{22}\selectfont\rmfamily\bfseries \@title \par}%
+    \vskip 3em%
+    \color{black}%
+    {\fontsize{16}{20}\selectfont\rmfamily\bfseries
+      \lineskip .75em%
+      \begin{minipage}[t]{\textwidth}%
+        \raggedright
+        \@author
+        \ifx\@email\empty
+         \else
+           \\\@email
+        \fi
+      \end{minipage}\par}%
+  \end{raggedright}\par
+  \@thanks
+  \vfil\null
+  \if@restonecol\twocolumn \else \newpage \fi
+}
+\endinput
+%%
+%% End of file `tptpolylibressavoirs-common.sty'.

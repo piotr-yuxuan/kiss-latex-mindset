@@ -1,0 +1,560 @@
+%%
+%% This is file `tptlsvbase.sty',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% tptlibressavoirs-misc.dtx  (with options: `tptlsvbase')
+%% 
+%% This is a generated file.
+%% 
+%% Copyright © Cédric Ware and Institut Mines-Télécom, 2007-2014
+%% All rights reserved. All logos are property of their respective institutions.
+%% For more information, contact cedric.ware@telecom-paristech.fr
+%% 
+\NeedsTeXFormat{LaTeX2e}[1995/12/01]
+\ProvidesPackage{tptlsvbase}[2014/12/31 v3.0.2 tptlibressavoirs]
+
+\newif\iflsv@license@private
+\newif\iflsv@license@academic
+\newif\iflsv@license@public
+\newif\iflsv@license@other
+\newif\iflsv@license@modif
+
+\DeclareOption{private}{
+  \lsv@license@privatetrue
+  \lsv@license@academicfalse
+  \lsv@license@publicfalse
+  \lsv@license@otherfalse
+  \lsv@license@modiffalse
+}
+\DeclareOption{academic}{
+  \lsv@license@privatefalse
+  \lsv@license@academictrue
+  \lsv@license@publicfalse
+  \lsv@license@otherfalse
+}
+\DeclareOption{public}{
+  \lsv@license@privatefalse
+  \lsv@license@academicfalse
+  \lsv@license@publictrue
+  \lsv@license@otherfalse
+}
+\DeclareOption{otherlicense}{
+  \lsv@license@privatefalse
+  \lsv@license@academicfalse
+  \lsv@license@publicfalse
+  \lsv@license@othertrue
+}
+\DeclareOption{nomodifications}{
+  \lsv@license@modiffalse
+}
+\DeclareOption{modifications}{
+  \lsv@license@modiftrue
+}
+\DeclareOption{french}{\def\lsv@default@language{french}}
+\DeclareOption{francais}{\def\lsv@default@language{french}}
+\DeclareOption{english}{\def\lsv@default@language{english}}
+
+\ExecuteOptions{private,nomodifications,french}
+\ProcessOptions
+
+\RequirePackage{graphicx}
+\RequirePackage{xcolor}
+%%\RequirePackage{pgf}
+
+%% Check licensing sanity.
+\iflsv@license@private\iflsv@license@modif
+  \typeout{Warning: license=private use, modifications disallowed}
+  \lsv@license@modiffalse
+\fi\fi
+\iflsv@license@other\iflsv@license@modif
+  \typeout{Warning: license undefined, modifications disallowed}
+  \lsv@license@modiffalse
+\fi\fi
+
+%% Colors.
+\definecolor{libressavoirsrouge}{rgb}{0.871,0,0.294}
+\definecolor{libressavoirsorange}{rgb}{1,0.4,0}
+\definecolor{libressavoirsblue}{rgb}{0.4,0,0.4}
+\definecolor{libressavoirsgreen}{rgb}{0.4,0.6,0.2}
+
+%% Hatches with graphics.
+\newlength{\gratch@rectwidth}
+\newlength{\gratch@rectheight}
+\newcommand*\hatchgraph[4]{% To be placed inside a pgfpicture.
+  % Arguments: #1 = southwest corner (pgf point);
+  % #2, #3 = width, height (lengths);
+  % #4 = graphics file name.
+  % ONLY FOR LESS THAN 29.5 cm x 0.8 cm !!
+  \setlength{\gratch@rectwidth}{#2}
+  \addtolength{\gratch@rectwidth}{1mm}
+  \setlength{\gratch@rectheight}{#3}
+  \addtolength{\gratch@rectheight}{1mm}
+  \pgfputat{#1}{\pgftext[left,bottom]{%
+    \includegraphics[
+      viewport=1mm 1mm {\gratch@rectwidth} {\gratch@rectheight},clip
+    ]{#4}}}
+}
+\newcommand*\hatchlsvtitle[3]{\hatchgraph{#1}{#2}{#3}{logo-hatches-rose}}
+\newcommand*\hatchlsvlicense[3]{%
+  \hatchgraph{#1}{#2}{#3}{\lsv@license@hatch@file}}
+
+%% Language macros.
+\newcommand*\lsvselectlanguage[1]{%
+  \expandafter\ifx\csname lsv@license@short@private@#1\endcsname\undefined
+    % Language unknown, switch to default instead.
+    \lsvselectlanguage{\lsv@default@language}%
+  \else
+    \def\lsv@licensename{\csname lsv@licensename@#1\endcsname}%
+    \def\lsv@license@atend{\csname lsv@license@atend@#1\endcsname}%
+    \def\lsv@license@seename{\csname lsv@license@seename@#1\endcsname}%
+    \def\lsv@license@short@private{%
+      \csname lsv@license@short@private@#1\endcsname}%
+    \def\lsv@license@long@private{%
+      \csname lsv@license@long@private@#1\endcsname}%
+    \def\lsv@license@short@academic{%
+      \csname lsv@license@short@academic@#1\endcsname}%
+    \def\lsv@license@long@academicmodif{%
+      \csname lsv@license@long@academicmodif@#1\endcsname}%
+    \def\lsv@license@long@academicnomodif{%
+      \csname lsv@license@long@academicnomodif@#1\endcsname}%
+    \def\lsv@license@short@public{%
+      \csname lsv@license@short@public@#1\endcsname}%
+    \def\lsv@license@long@publicmodif{%
+      \csname lsv@license@long@publicmodif@#1\endcsname}%
+    \def\lsv@license@long@publicnomodif{%
+      \csname lsv@license@long@publicnomodif@#1\endcsname}%
+    \def\lsv@license@binding{\csname lsv@license@binding@#1\endcsname}%
+    \iflsv@license@modif
+      \def\lsv@license@ismodif{\csname lsv@license@modif@#1\endcsname}%
+    \else
+      \def\lsv@license@ismodif{\csname lsv@license@nomodif@#1\endcsname}%
+    \fi
+  \fi
+}
+\AtBeginDocument{%
+  \@ifpackageloaded{babel}{%
+    \addto\captionsfrench{\lsvselectlanguage{french}}%
+    \addto\captionsenglish{\lsvselectlanguage{english}}%
+    \lsvselectlanguage{\bbl@main@language}%
+  }{%
+    \lsvselectlanguage{\lsv@default@language}%
+  }%
+}
+
+%% License macros.
+\newcommand\lsv@license@barf{%
+  \typeout{%
+    \textbackslash licenseshorttext, \textbackslash licensefulltext macros
+    unavailable unless lsvlicense package option "otherlicense" is used.
+  }%
+}
+\newcommand*\licenseemail[1]{\gdef\lsv@license@email{#1}}
+
+%% Check license options.
+\iflsv@license@private
+  \def\lsv@license@short{\lsv@license@short@private}
+  \def\lsv@license@long{\lsv@license@long@private}
+  \newcommand*\lsv@license@color{libressavoirsorange}
+  \newcommand*\lsv@license@hatch@file{logo-hatches-orange}
+  \newcommand*\lsv@license@graphics@file{logo-private-use}
+\fi
+\iflsv@license@academic
+  \def\lsv@license@short{\lsv@license@short@academic}
+  \newcommand*\lsv@license@color{libressavoirsblue}
+  \newcommand*\lsv@license@hatch@file{logo-hatches-blue}
+  \iflsv@license@modif
+    \def\lsv@license@long{\lsv@license@long@academicmodif}
+    \newcommand*\lsv@license@graphics@file{logo-academic-use-modif}
+  \else
+    \def\lsv@license@long{\lsv@license@long@academicnomodif}
+    \newcommand*\lsv@license@graphics@file{logo-academic-use}
+  \fi
+\fi
+\iflsv@license@public
+  \def\lsv@license@short{\lsv@license@short@public}
+  \newcommand*\lsv@license@color{libressavoirsgreen}
+  \newcommand*\lsv@license@hatch@file{logo-hatches-green}
+  \iflsv@license@modif
+    \def\lsv@license@long{\lsv@license@long@publicmodif}
+    \newcommand*\lsv@license@graphics@file{logo-public-use-modif}
+  \else
+    \def\lsv@license@long{\lsv@license@long@publicnomodif}
+    \newcommand*\lsv@license@graphics@file{logo-public-use}
+  \fi
+\fi
+\iflsv@license@other
+  % FIXME test!
+  \newcommand\licenseshorttext[1]{\gdef\lsv@license@short{#1}}
+  \newcommand\licenselongtext[1]{\gdef\lsv@license@long{#1}}
+  \newcommand\licenselogobig[1]{\gdef\lsv@license@logo@big{#1}}
+  \newcommand\licenselogosmall[1]{\gdef\lsv@license@logo@small{#1}}
+  \newcommand\licenselogo[1]{\licenselogobig{#1}\licenselogosmall{#1}}
+  \newcommand\licensecolor[1]{\gdef\lsv@license@color{#1}}
+  \licenseshorttext{??}
+  \licenselongtext{??}
+  \licenselogo{\fbox{??}}
+  \licensecolor{black}
+  \licenseemail{??@??.??}
+\else
+  \newcommand\licenseshorttext[1]{\lsv@license@barf}
+  \newcommand\licensefulltext[1]{\lsv@license@barf}
+  \newcommand\licenselogo[1]{\lsv@license@barf}
+  \newcommand\licenselogobig[1]{\lsv@license@barf}
+  \newcommand\licenselogosmall[1]{\lsv@license@barf}
+  \newcommand*\lsv@license@logo@big{%
+    \includegraphics[height=\lsvlicenselogobigheight]{%
+      \lsv@license@graphics@file}}
+  \newcommand*\lsv@license@logo@small{%
+    \includegraphics[height=\lsvlicenselogosmallheight]{%
+      \lsv@license@graphics@file}}
+\fi
+
+\newlength\lsvlicenselogobigheight
+\newlength\lsvlicenselogosmallheight
+\setlength\lsvlicenselogobigheight{8mm}
+\setlength\lsvlicenselogosmallheight{5.3mm}
+
+%% Need \pagename in case Babel not loaded.
+\providecommand{\pagename}{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% License texts.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%
+%% General.
+%%
+\providecommand\lsv@license@email{sitepedago@telecom-paristech.fr}
+\newcommand\lsv@licensename@french{Licence de droits d'usage}
+\newcommand\lsv@license@atend@french{en fin de document}
+\newcommand\lsv@license@seename@french{Voir}
+\newcommand\lsv@license@modif@french{avec modifications}
+\newcommand\lsv@license@nomodif@french{sans modifications}
+\newcommand\lsv@license@binding@french{%
+  \textit{\textbf{%
+    Par le t\'el\'echargement ou la consultation de ce document,
+    l'utilisateur accepte la licence d'utilisation qui y est attach\'ee,
+    telle que d\'etaill\'ee dans les dispositions suivantes, et s'engage
+    \`a la respecter int\'egralement.%
+  }}%
+}
+\newcommand\lsv@license@seename@english{See}
+\newcommand\lsv@licensename@english{Document License}
+\newcommand\lsv@license@atend@english{at document end}
+\newcommand\lsv@license@modif@english{with modification}
+\newcommand\lsv@license@nomodif@english{without modification}
+\newcommand\lsv@license@binding@english{%
+  \textit{\textbf{% FIXME check text
+      By downloading or viewing this document, the user accepts
+      and wholly abides by its license, which is set out in the
+      following dispositions.
+  }}%
+}
+
+%%
+%% Private use only.
+%%
+\newcommand\lsv@license@short@private@french{Cadre priv\'e}
+\newcommand\lsv@license@long@private@french{%
+La licence conf\`ere \`a l'utilisateur un droit d'usage sur le document
+consult\'e ou t\'el\'echarg\'e, totalement ou en partie, dans les conditions
+d\'efinies ci-apr\`es, et \`a l'exclusion de toute utilisation
+commerciale.\\
+~\\
+Le droit d'usage d\'efini par la licence est limit\'e \`a un usage dans
+un cadre exclusivement priv\'e. Ce droit comprend~:\\
+--~le droit de reproduire le document pour stockage aux fins de
+repr\'esentation sur un terminal informatique unique,\\
+--~le droit de reproduire le document en un exemplaire, pour copie de
+sauvegarde ou impression papier.\\
+~\\
+Aucune modification du document dans son contenu, sa forme ou sa
+pr\'esentation, ni aucune redistribution en tout ou partie, sous quelque
+forme et support que ce soit et notamment par mise en r\'eseau, ne sont
+autoris\'ees.\\
+~\\
+Les mentions relatives \`a la source du document et/ou \`a son auteur
+doivent \^etre conserv\'ees dans leur int\'egralit\'e.\\
+~\\
+Le droit d'usage d\'efini par la licence est personnel, non exclusif et non transmissible.  Tout autre usage que ceux pr\'evus par la licence est soumis \`a autorisation pr\'ealable et expresse de l'auteur :
+}
+
+\newcommand\lsv@license@short@private@english{Private context}
+\newcommand\lsv@license@long@private@english{%
+The licence confers to the user a right to use the consulted or
+downloaded document, in full or in part, in accordance with the
+conditions set out hereinafter, to the exclusion of any commercial
+use.
+
+The right of use set out by the licence is limited to use in an
+exclusively private context. This right includes:
+
+\begin{itemize}
+\item the right to copy the document for storage for representation
+  purposes on a single computer workstation,
+\item the right to make a single copy of the document as a back-up
+  copy or paper hard-copy.
+\end{itemize}
+
+No modification of the document to its contents, form or presentation
+nor any redistribution of all or part of it, in any form or on any
+media and in particular a computer network are allowed.
+
+The information relating to the source of the document and/or its
+author must be fully preserved.
+
+The right of use set out in the licence is personal, non-exclusive and
+non-transferable.
+
+Any use except that set out in the licence is subject to the prior,
+express authorisation of the author.
+}
+
+%%
+%% Academic use only.
+%%
+\newcommand\lsv@license@short@academic@french{Contexte acad\'emique}
+\newcommand\lsv@license@short@academic@english{Academic context}
+
+%% Academic without modifications.
+\newcommand\lsv@license@long@academicnomodif@french{%
+La licence conf\`ere \`a l'utilisateur un droit d'usage sur le document
+consult\'e ou t\'el\'echarg\'e, totalement ou en partie, dans les conditions
+d\'efinies ci-apr\`es, et \`a l'exclusion de toute utilisation
+commerciale.\\
+~\\
+Le droit d'usage d\'efini par la licence autorise un usage dans un cadre
+acad\'emique, par un utilisateur donnant des cours dans un \'etablissement
+d'enseignement secondaire ou sup\'erieur et \`a l'exclusion expresse des
+formations commerciales et notamment de formation continue. Ce droit
+comprend~:\\
+--~le droit de reproduire tout ou partie du document sur support
+informatique ou papier,\\
+--~le droit de diffuser tout ou partie du document \`a destination
+des \'el\`eves ou \'etudiants.\\
+~\\
+Aucune modification du document dans son contenu, sa forme ou
+sa pr\'esentation n'est autoris\'ee.\\
+Les mentions relatives \`a la source du document et/ou \`a son auteur doivent
+\^etre conserv\'ees dans leur int\'egralit\'e.
+~\\
+Le droit d'usage d\'efini par la licence est personnel et non exclusif.
+Tout autre usage que ceux pr\'evus par la licence est soumis \`a autorisation
+pr\'ealable et expresse de l'auteur :
+}
+
+\newcommand\lsv@license@long@academicnomodif@english{%
+The licence confers to the user a right to use the consulted or
+downloaded document, totally or in part, in accordance with the
+conditions set out hereinafter for non-commercial use only.
+
+The right of use set out by the licence allows use in an academic
+context by a user giving classes in a secondary or higher education
+establishment and expressly excludes commercial training and in-work
+vocational training in particular. This right includes:
+
+\begin{itemize}
+\item the right to copy all or a part of the document onto a computer
+  or paper medium,
+\item the right to distribute all or a part of the document to pupils
+  or students.
+\end{itemize}
+
+No modification of the documents to its contents, form or presentation is
+allowed.  The information relating to the document source and/or its
+author must be fully preserved.
+
+The right of use set out in the licence is personal, non-exclusive and
+non-transferable. Any use except that set out in the licence is
+subject to the prior, express authorisation of the author.
+}
+
+%% Academic with modifications.
+\newcommand\lsv@license@long@academicmodif@french{%
+La licence conf\`ere \`a l'utilisateur un droit d'usage sur le document
+consult\'e ou t\'el\'echarg\'e, totalement ou en partie, dans les conditions
+d\'efinies ci-apr\`es, et \`a l'exclusion de toute utilisation
+commerciale.\\
+~\\
+Le droit d'usage d\'efini par la licence autorise un usage dans un cadre
+acad\'emique, par un utilisateur donnant des cours dans un \'etablissement
+d'enseignement secondaire ou sup\'erieur et \`a l'exclusion expresse des
+formations commerciales et notamment de formation continue. Ce droit
+comprend~:\\
+--~le droit de reproduire tout ou partie du document sur support
+informatique ou papier,\\
+--~le droit de diffuser tout ou partie du document \`a destination
+des \'el\`eves ou \'etudiants,\\
+--~le droit de modifier la forme ou la pr\'esentation du document,\\
+--~le droit d'int\'egrer tout ou partie du document dans un document
+composite et de le diffuser dans ce nouveau document, \`a condition
+que~:\\
+\qquad\qquad --~L'auteur soit inform\'e,\\
+\qquad\qquad --~Le document d\'eriv\'e soit diffus\'e dans un cadre acad\'emique.\\
+~\\
+Les mentions relatives \`a la source du document et/ou \`a son auteur doivent
+\^etre conserv\'ees dans leur int\'egralit\'e.\\
+~\\
+Le droit d'usage d\'efini par la licence est personnel et non exclusif.
+Tout autre usage que ceux pr\'evus par la licence est soumis \`a autorisation
+pr\'ealable et expresse de l'auteur :
+}
+
+\newcommand\lsv@license@long@academicmodif@english{%
+The licence confers to the user a right to use the consulted or
+downloaded document, totally or in part, in accordance with the
+conditions set out hereinafter for non-commercial use only.
+
+The right of use set out by the licence allows use in an academic
+context by a user giving classes in a secondary or higher education
+establishment and expressly excludes commercial training and in-work
+vocational training in particular. This right includes:
+
+\begin{itemize}
+\item the right to copy all or a part of the document onto a computer
+  or paper medium,
+\item the right to distribute all or a part of the document to pupils
+  or students,
+\item the right to include all or a part of the document in a composite
+  document and to distribute it in this new document on condition that:
+  \begin{itemize}
+  \item The author is informed,
+  \item The derived document is distributed in an academic context.
+  \end{itemize}
+\end{itemize}
+
+The information relating to the source of the document and/or its
+author must be preserved in full.
+
+The right of use set out by the licence is personal and non-exclusive.
+Any use except that set out by the licence is
+subject to the author's prior express authorisation.
+}
+
+%%
+%% Public use.
+%%
+\newcommand\lsv@license@short@public@french{Contexte public}
+\newcommand\lsv@license@short@public@english{Public context}
+
+%% Public without modifications.
+\newcommand\lsv@license@long@publicnomodif@french{%
+La licence conf\`ere \`a l'utilisateur un droit d'usage sur le document
+consult\'e ou t\'el\'echarg\'e, totalement ou en partie, dans les conditions
+d\'efinies ci-apr\`es et \`a l'exclusion expresse de toute utilisation
+commerciale.\\
+Le droit d'usage d\'efini par la licence autorise un usage \`a destination de
+tout public qui comprend~:\\
+--~Le droit de reproduire tout ou partie du document sur support
+informatique ou papier,\\
+--~Le droit de diffuser tout ou partie du document au public sur
+support papier ou informatique, y compris par la mise \`a la disposition
+du public sur un r\'eseau num\'erique.\\
+~\\
+Aucune modification du document dans son contenu, sa forme ou sa pr\'esentation
+n'est autoris\'ee.\\
+~\\
+Les mentions relatives \`a la source du document et/ou \`a son auteur doivent
+\^etre conserv\'ees dans leur int\'egralit\'e.\\
+~\\
+Le droit d'usage d\'efini par la licence est personnel, non exclusif et non
+transmissible.\\
+Tout autre usage que ceux pr\'evus par la licence est soumis \`a autorisation
+pr\'ealable et expresse de l'auteur~:
+}
+
+\newcommand\lsv@license@long@publicnomodif@english{%
+The licence confers to the user a right to use the consulted or
+downloaded document, in full or in part, in accordance with the
+conditions set out hereinafter to the express exclusion of any
+commercial use.
+
+The right of use set out by the licence allows use for all users which
+includes:
+
+\begin{itemize}
+\item The right to copy all or a part of the document onto a computer or
+  paper medium,
+\item The right to distribute all or a part of the document to
+  the public on a paper or computer medium including its on-line
+  publication on a digital network.
+\end{itemize}
+
+No modification of the document in its contents, form or presentation
+is allowed.
+
+The information relating to the source of the document
+and/or its author must be fully preserved.
+
+The right of use set out by the licence is personal, non-exclusive and
+non-transferable.  Any use other than that set out by the licence is
+subject to the author's prior express authorisation.
+}
+
+%% Public with modifications.
+\newcommand\lsv@license@long@publicmodif@french{%
+La licence conf\`ere \`a l'utilisateur un droit d'usage sur le document
+consult\'e ou t\'el\'echarg\'e, totalement ou en partie, dans les conditions
+d\'efinies ci-apr\`es et \`a l'exclusion expresse de toute utilisation
+commerciale.\\
+Le droit d'usage d\'efini par la licence autorise un usage \`a destination de
+tout public qui comprend~:\\
+--~le droit de reproduire tout ou partie du document sur support
+informatique ou papier,\\
+--~le droit de diffuser tout ou partie du document au public sur
+support papier ou informatique, y compris par la mise \`a la disposition
+du public sur un r\'eseau num\'erique,\\
+--~le droit de modifier la forme ou la pr\'esentation du document,\\
+--~le droit d'int\'egrer tout ou partie du document dans un document
+composite et de le diffuser dans ce nouveau document, \`a condition
+que~:\\
+\qquad\qquad --~L'auteur soit inform\'e.\\
+~\\
+Les mentions relatives \`a la source du document et/ou \`a son auteur doivent
+\^etre conserv\'ees dans leur int\'egralit\'e.\\
+~\\
+Le droit d'usage d\'efini par la licence est personnel et non exclusif.\\
+Tout autre usage que ceux pr\'evus par la licence est soumis \`a autorisation
+pr\'ealable et expresse de l'auteur~:
+}
+
+\newcommand\lsv@license@long@publicmodif@english{%
+The licence confers to the user a right to use the consulted or
+downloaded document, in full or in part, in accordance with the
+conditions set out hereinafter to the express exclusion of any
+commercial use.
+
+The right of use set out by the licence allows use for all users which
+includes:
+
+\begin{itemize}
+\item the right to copy all or a part of the document onto a computer
+  or paper medium,
+
+\item The right to distribute all or a part of the document to the
+  public on a paper or computer medium including its on-line
+  publication on a digital network,
+
+\item the right to modify the form or the presentation of the document,
+
+\item the right to include all or a part of the document in a
+  composite document and to distribute it in this new document on
+  condition that:
+  \begin{itemize}
+  \item the author is informed.
+  \end{itemize}
+\end{itemize}
+
+The information relating to the source of the document and/or its
+author must be fully preserved.
+
+The right of use set out in the licence is personal and non-exclusive.
+
+Any use except that set out in the licence is subject to the prior,
+express authorisation of the author.
+}
+\endinput
+%%
+%% End of file `tptlsvbase.sty'.

@@ -1,0 +1,56 @@
+%%
+%% This is file `tptpolylibressavoirs.sty',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% tptlibressavoirs-polylibressavoirs.dtx  (with options: `polylsv')
+%% 
+%% This is a generated file.
+%% 
+%% Copyright © Cédric Ware and Institut Mines-Télécom, 2007-2014
+%% All rights reserved. All logos are property of their respective institutions.
+%% For more information, contact cedric.ware@telecom-paristech.fr
+%% 
+\NeedsTeXFormat{LaTeX2e}[1995/12/01]
+\ProvidesPackage{tptpolylibressavoirs}[2014/12/31 v3.0.2 tptlibressavoirs]
+
+\providecommand\@Pass@ption@pkg[2]{%
+  \DeclareOption{#1}{\PassOptionsToPackage{\CurrentOption}{#2}}}
+\@Pass@ption@pkg{private}{tptlsvbase}
+\@Pass@ption@pkg{academic}{tptlsvbase}
+\@Pass@ption@pkg{public}{tptlsvbase}
+\@Pass@ption@pkg{otherlicense}{tptlsvbase}
+\@Pass@ption@pkg{nomodifications}{tptlsvbase}
+\@Pass@ption@pkg{modifications}{tptlsvbase}
+\@Pass@ption@pkg{french}{tptlsvbase}
+\@Pass@ption@pkg{francais}{tptlsvbase}
+\@Pass@ption@pkg{english}{tptlsvbase}
+
+\newif\iflsv@helvet\lsv@helvettrue
+\DeclareOption{nohelvet}{\lsv@helvetfalse}
+
+\newif\iflsv@autogeometry\lsv@autogeometrytrue
+\DeclareOption{noautogeometry}{\lsv@autogeometryfalse}
+
+\newif\iflsv@stdheadmark\lsv@stdheadmarkfalse
+\DeclareOption{stdheadmark}{\lsv@stdheadmarktrue}
+
+\ProcessOptions
+\RequirePackage{tptlsvbase}
+\RequirePackage{tptbranding}
+\RequirePackage{graphicx}
+\RequirePackage{xcolor}
+
+%%
+%% Load sub-packages depending on base class.
+%%
+\RequirePackage{tptpolylibressavoirs-common}
+\@ifclassloaded{memoir}{
+  \RequirePackage{tptpolylibressavoirs-memoir}
+}{
+  \RequirePackage{tptpolylibressavoirs-stdclass}
+}
+\endinput
+%%
+%% End of file `tptpolylibressavoirs.sty'.

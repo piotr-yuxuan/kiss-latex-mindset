@@ -1,0 +1,115 @@
+%%
+%% This is file `tptpolylibressavoirs-memoir.sty',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% tptlibressavoirs-polylibressavoirs.dtx  (with options: `polylsv-memoir')
+%% 
+%% This is a generated file.
+%% 
+%% Copyright © Cédric Ware and Institut Mines-Télécom, 2007-2014
+%% All rights reserved. All logos are property of their respective institutions.
+%% For more information, contact cedric.ware@telecom-paristech.fr
+%% 
+\NeedsTeXFormat{LaTeX2e}[1995/12/01]
+\ProvidesPackage{tptpolylibressavoirs-memoir}[2014/12/31 v3.0.2 tptlibressavoirs]
+
+%%
+%% Page setup.
+%%
+\iflsv@autogeometry
+  % Class option [a4paper] or [letterpaper] should have
+  % already set stock and trim lengths.  Only set margins.
+  \setlrmarginsandblock{\polyhmargin}{*}{1}
+  \setulmarginsandblock{\polytmargin}{\polybmargin}{*}
+  \setheadfoot{\polyheadheight}{\polyfootskip}
+  \setheaderspaces{*}{\polyheadsep}{*}
+  \checkandfixthelayout[fixed]
+\fi
+
+%%
+%% Header and footer.
+%%
+\newcommand*{\footerfont}{\fontsize{8pt}{9.5pt}\selectfont\rmfamily}
+\newcommand*{\headerfont}{\footerfont}
+\newcommand{\makebothheads}[4]{%
+  \makeoddhead{#1}{#2}{#3}{#4}%
+  \makeevenhead{#1}{#2}{#3}{#4}%
+}
+\newcommand{\makebothfoots}[4]{%
+  \makeoddfoot{#1}{#2}{#3}{#4}%
+  \makeevenfoot{#1}{#2}{#3}{#4}%
+}
+
+%%
+%% Default page style.
+%%
+
+%% Header: just title.
+\makepagestyle{polydefault}
+\makebothheads{polydefault}{}{\headerfont\@title}{}
+
+%% Footer: page, license block, and logo (top-aligned to license block rule).
+
+\makebothfoots{polydefault}%
+              {\licenseblockinfoot}%
+              {\footerfont\thepage/\the\c@lastpage}%
+              {\logoinfoot}
+
+%% Alternate page style: use standard marks.
+\copypagestyle{polystd}{polydefault}
+\makeoddhead{polystd}{}{\headerfont\rightmark}{}
+\makeevenhead{polystd}{}{\headerfont\leftmark}{}
+
+%%
+%% Chapter page style: delete header.
+%%
+\copypagestyle{chapter}{polydefault}
+\makebothheads{chapter}{}{}{}
+
+%%
+%% Title page style: replace entire header with frise logo,
+%% replace page number in center foot by the date, and use
+%% title-style license block.
+%%
+\makepagestyle{title}
+\makebothheads{title}%
+              {%
+                \settoheight{\@tempdima}{\insertlogofriserougepoly}%
+                \addtolength{\@tempdima}{\titlefriseposy}%
+                \addtolength{\@tempdima}{-\polytmargin}%
+                \addtolength{\@tempdima}{\polyheadsep}%
+                \addtolength{\@tempdima}{\polyheadheight}%
+                \smash{\raisebox{-\@tempdima}{\insertlogofriserougepoly}}% FIXME
+              }{}{}
+\makebothfoots{title}%
+              {\licenseblockinfoot[title]}%
+              {\footerfont\@date}%
+              {\logoinfoot}
+
+%%
+%% License page style: license-style license block.
+%%
+\copypagestyle{license}{polydefault}
+\makebothfoots{license}%
+              {\licenseblockinfoot[license]}%
+              {\footerfont\thepage/\the\c@lastpage}%
+              {%
+                \settoheight{\@tempdima}{\insertlogotptpoly}%
+                \settoheight{\@tempdimb}{\licenseblockinfoot[title]}%
+                \addtolength{\@tempdima}{-\@tempdimb}%
+                \raisebox{-\@tempdima}{\insertlogotptpoly}%
+              }
+
+%%
+%% Activate page style.
+%%
+\iflsv@stdheadmark
+  \pagestyle{polystd}
+\else
+  \pagestyle{polydefault}
+\fi
+\endinput
+%%
+%% End of file `tptpolylibressavoirs-memoir.sty'.

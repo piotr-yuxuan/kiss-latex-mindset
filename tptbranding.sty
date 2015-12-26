@@ -1,0 +1,130 @@
+%%
+%% This is file `tptbranding.sty',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% tptlibressavoirs-misc.dtx  (with options: `tptbranding')
+%% 
+%% This is a generated file.
+%% 
+%% Copyright © Cédric Ware and Institut Mines-Télécom, 2007-2014
+%% All rights reserved. All logos are property of their respective institutions.
+%% For more information, contact cedric.ware@telecom-paristech.fr
+%% 
+\NeedsTeXFormat{LaTeX2e}[1995/12/01]
+\ProvidesPackage{tptbranding}[2014/12/31]
+
+\RequirePackage{graphicx}
+\RequirePackage{xcolor}
+\RequirePackage{calc}
+
+%%
+%% Define our trademark colors.  Problem: ambiguity over tptred!
+%% RGB (197,3,71), CMYK (20,100,60,0) (official table)?
+%% RGB (222,0,75), CMYK (0,100,66,13) (old version)?
+%% RGB (191,18,56) (official logo GIFs and Powerpoint template)?
+%%
+\definecolor{tptred}{rgb}{0.749,0.071,0.220}
+\definecolor{tptbrown}{rgb}{0.427,0.314,0.278}
+\definecolor{tptgray}{gray}{0.722}
+
+%%
+%% Define macro that generates a red-black-brown band of given height and width.
+%%
+\newlength\tpt@brand@tempdim
+\newcommand*\rbbfrieze[2]{%
+  \setlength{\tpt@brand@tempdim}{#2}%
+  \@for\@tmp@color:=tptred,black,tptbrown\do{%
+    \textcolor{\@tmp@color}{\rule{0.333\tpt@brand@tempdim}{#1}}%
+  }%
+}
+
+%%
+%% Macro \putonbgwithmargin{color}{margin}{content}: typeset <content>
+%% on a rectangular background of given color, sticking out with <margin>
+%% width on all sizes.  The background takes no space.
+%%
+\newsavebox\tpt@brand@tempbox
+\newcommand{\putonbgwithmargin}[3]{%
+  \bgroup
+    \sbox\tpt@brand@tempbox{\hbox{#3}}%
+    \setlength{\tpt@brand@tempdim}{#2}%
+    \leavevmode
+    \smash{\rlap{%
+        \hspace{-\tpt@brand@tempdim}%
+        \textcolor{#1}{%
+          \rule[-\tpt@brand@tempdim -\dp\tpt@brand@tempbox]%
+               {\wd\tpt@brand@tempbox + 2\tpt@brand@tempdim}%
+               {\ht\tpt@brand@tempbox + \dp\tpt@brand@tempbox
+                 + 2\tpt@brand@tempdim}%
+        }%
+    }}%
+    \usebox{\tpt@brand@tempbox}%
+  \egroup
+}
+
+%%
+%% Macro \uselogobox{#1}[#2][#3]: typesets box \logo#1box.  If optional
+%% arguments are given, the box is resized to given width and height.
+%% Optional arguments are as with \resizebox: can be "!" to preserve
+%% aspect ratio; if only one optional argument is given, use it as
+%% width and "!" as height.
+%%
+\newcommand*\uselogobox[1]{%
+  \@ifnextchar[{\@uselogobox@resize@one{#1}}{\@uselogobox@noresize{#1}}%
+}
+\newcommand*\@uselogobox@noresize[1]{%
+  \expandafter\usebox\csname logo#1box\endcsname
+}
+\def\@uselogobox@resize@one#1[#2]{%
+  \@ifnextchar[%
+    {\@uselogobox@resize@two{#1}[#2]}%
+    {\@uselogobox@resize@two{#1}[#2][!]}%
+}
+\def\@uselogobox@resize@two#1[#2][#3]{%
+  \resizebox{#2}{#3}{\@uselogobox@noresize{#1}}%
+}
+
+%%
+%% Macro \deflogobox: define box \logo#1box, define macro \logo#1 to set
+%% the box content to its argument, and define \insertlogo#1 to typeset
+%% said box (through \uselogobox{#1}, thus with same optional arguments).
+%%
+\newcommand\deflogobox[2]{%
+  \expandafter\newsavebox\csname logo#1box\endcsname%
+  \expandafter\gdef\csname logo#1\endcsname##1{%
+    \expandafter\sbox\csname logo#1box\endcsname{##1}%
+  }%
+  \csname logo#1\endcsname{#2}%
+  \expandafter\gdef\csname insertlogo#1\endcsname{\uselogobox{#1}}%
+}
+
+%%
+%% \deflogographics: wraps of \deflogobox, content = \includegraphics[#2]{#3}
+%% \deflogographicsbg: same with a background + margin.
+%%
+\newcommand*\deflogographics[3]{%
+  \deflogobox{#1}{\includegraphics[#2]{#3}}%
+}
+\newcommand*\deflogographicsbg[5]{%
+  \deflogobox{#1}{\putonbgwithmargin{#2}{#3}{\includegraphics[#4]{#5}}}%
+}
+
+%%
+%% Define the logos.
+%% FIXME need cleanup, notably no longer needs sizes.
+%%
+\deflogographics{tpt}{}{logo-Telecom-RGB}
+\deflogographicsbg{tpttitleframe}{white}{1mm}{}{logo-Telecom+IMTtext}
+\deflogographics{friserose}{width=2.24cm}{logo-frise-rose}
+\deflogographics{friserouge}{width=2.24cm}{logo-frise-rouge}
+\deflogographics{friserougepoly}{width=7.06cm}{logo-frise-rouge}
+\deflogographics{frisetitleframe}{}{logo-frise-rose}
+\deflogographics{frisepartframe}{width=4cm}{logo-frise-rose}
+\deflogographics{frisetitleband}{width=2.99cm}{logo-frise-rose}
+\deflogographics{lsvcercles}{width=18.3mm}{logo-lsv-cercles}
+
+\endinput
+%%
+%% End of file `tptbranding.sty'.

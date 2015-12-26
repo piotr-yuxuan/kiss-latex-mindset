@@ -47,19 +47,13 @@
 % relative Verringerung der Breite der Verzeichniseintraege 
 % pro Stufe
 
-%\begin{postscript}
-%\begin{directory}{fontinst}
-%\file{\begin{directory}{doc/}
-%\file{\begin{directory}{manual/}
-%\file[Auxiliary file]{fontinst.aux}
-%\file{fontinst.log}
-%\file[table of contents ]{fontinst.toc}
-%\file{intro98.tex }
-%\file{ltxguide.cfg}
-%\file{roadmap.eps }
-%\end{directory}}
-%\file{encspecs.zip}
-%\end{directory}}
-%\file{examples.zip}
-%\end{directory}
-%\end{postscript}
+\usepackage{pgfplots}
+
+\usepgfplotslibrary{dateplot}
+\usetikzlibrary{calc}
+\pgfplotsset{compat=newest}
+\makeatletter
+\long\def\ifnodedefined#1#2#3{%
+    \@ifundefined{pgf@sh@ns@#1}{#3}{#2}%
+}
+\makeatother

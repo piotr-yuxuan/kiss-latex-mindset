@@ -30,3 +30,9 @@
 
 \renewcommand\listingscaption{Extrait de code}
 \renewcommand\listoflistingscaption{Table des extraits de code}
+
+\newcommand\textttc[1]{%
+\selectlanguage{english}%
+\mintinline[breaklines]{Java}|#1|%
+\selectlanguage{french}%
+}

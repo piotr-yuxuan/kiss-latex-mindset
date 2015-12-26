@@ -1,22 +1,16 @@
 \makeatletter
-\newenvironment{titlepage}
+\newenvironment{customtitlepage}
 {\if@twocolumn
 	\@restonecoltrue\onecolumn
 \else
 	\@restonecolfalse\newpage
 \fi
 \thispagestyle{empty}%
-\setcounter{page}\@ne
 }%
-{\if@restonecol\twocolumn \else \newpage \fi
-\if@twoside\else
-\setcounter{page}\@ne
-\fi
-}
 
-\newcommand\maketitlepage{
+\newcommand\makecustomtitlepage{
 	
-	\begin{titlepage}
+	\begin{customtitlepage}
 	
 	\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Defines a new command for the horizontal lines, change thickness here
 	
@@ -75,9 +69,9 @@
 	%----------------------------------------------------------------------------------------
 	\begin{minipage}{\textwidth}
 		\centering
-		\raisebox{-0.5\height}{\includegraphics[width=.5\textwidth,height=.4\textwidth,keepaspectratio]{assets/logo_alma.png}}
+		\raisebox{-0.5\height}{\includegraphics[width=.5\textwidth,height=.4\textwidth,keepaspectratio]{assets/logo-Telecom-RGB}}
 		\hspace*{.2in}
-		\raisebox{-0.5\height}{\includegraphics[width=.5\textwidth,height=.37\textwidth,keepaspectratio]{assets/logo_company.png}}
-	\end{minipage}\end{titlepage}}
+		\raisebox{-0.5\height}{\includegraphics[width=.5\textwidth,height=.387\textwidth,keepaspectratio]{assets/logo_company.png}}
+	\end{minipage}\end{customtitlepage}}
 
 \makeatother

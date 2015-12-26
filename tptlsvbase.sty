@@ -94,7 +94,7 @@
   \pgfputat{#1}{\pgftext[left,bottom]{%
     \includegraphics[
       viewport=1mm 1mm {\gratch@rectwidth} {\gratch@rectheight},clip
-    ]{#4}}}
+    ]{assets/#4}}}
 }
 \newcommand*\hatchlsvtitle[3]{\hatchgraph{#1}{#2}{#3}{logo-hatches-rose}}
 \newcommand*\hatchlsvlicense[3]{%
@@ -205,10 +205,10 @@
   \newcommand\licenselogosmall[1]{\lsv@license@barf}
   \newcommand*\lsv@license@logo@big{%
     \includegraphics[height=\lsvlicenselogobigheight]{%
-      \lsv@license@graphics@file}}
+      assets/\lsv@license@graphics@file}}
   \newcommand*\lsv@license@logo@small{%
     \includegraphics[height=\lsvlicenselogosmallheight]{%
-      \lsv@license@graphics@file}}
+      assets/\lsv@license@graphics@file}}
 \fi
 
 \newlength\lsvlicenselogobigheight
